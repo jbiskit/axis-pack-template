@@ -1,0 +1,52 @@
+name: Sync from policy-axis
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-from-policy-axis
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    if: github.repository == 'jbiskit/axis-pack-template'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out template
+        uses: actions/checkout@v4
+
+      - name: Check out policy-axis pack-template
+        uses: actions/checkout@v4
+        with:
+          repository: jbiskit/policy-axis
+          ref: main
+          path: .source-policy-axis
+          sparse-checkout: pack-template
+          persist-credentials: false
+
+      - name: Replace pack files
+        run: |
+          set -euo pipefail
+          rsync -a --delete \
+            --exclude '.git/' \
+            --exclude '.source-policy-axis/' \
+            .source-policy-axis/pack-template/ .
+          rm -rf .source-policy-axis
+
+      - name: Commit if changed
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --staged --quiet; then
+            echo "No pack-template changes on policy-axis main."
+            exit 0
+          fi
+          git commit -m "Sync pack-template from jbiskit/policy-axis"
+          git push
