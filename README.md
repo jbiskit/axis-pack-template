@@ -6,7 +6,7 @@ Treat the pack as an **external source**. This template is **Windows-only** for 
 
 A **baseline** is a JSON file that **selects** pack paths. It does not duplicate policy JSON.
 
-Use this repository as a GitHub template, or copy the folders onto disk and add them in Axis under **Baselines → Manage sources**. Packs are **read-only** in Axis today.
+Use this repository as a GitHub template, or copy the folders onto disk and add them in Axis under **Baselines → Manage sources**. Axis can also **export a tenant** into this layout (**Baselines → Export tenant pack**). Packs are **read-only** in Axis today. Import Settings Catalog JSON from Policies, and import scripts from the Scripts lists.
 
 ## Examples
 
@@ -36,6 +36,7 @@ windows/
   endpoint-security/
   windows-update/
   enrollment/autopilot/     Autopilot only for now
+  group-policy/             ADMX / Group Policy (Windows)
 baselines/                  Named selections (`includes`), not copies of policies
 ```
 
@@ -86,5 +87,5 @@ Axis uses the GitHub Contents API. It does not clone the repo. Pack listings use
 
 ## Mirroring to this GitHub template
 
-[jbiskit/axis-pack-template](https://github.com/jbiskit/axis-pack-template) copies this folder from `jbiskit/policy-axis` on a daily schedule (and on a manual workflow run). It uses the default `GITHUB_TOKEN` only. Forks of the template skip that job so cron cannot overwrite a fork.
+[jbiskit/axis-pack-template](https://github.com/jbiskit/axis-pack-template) copies this folder from `jbiskit/Axis` on a daily schedule (and on a manual workflow run). It uses the default `GITHUB_TOKEN` only. Forks of the template skip that job so cron cannot overwrite a fork.
 
