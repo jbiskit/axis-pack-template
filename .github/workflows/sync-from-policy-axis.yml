@@ -23,7 +23,7 @@ jobs:
       - name: Check out policy-axis pack-template
         uses: actions/checkout@v4
         with:
-          repository: jbiskit/policy-axis
+          repository: jbiskit/Axis
           ref: main
           path: .source-policy-axis
           sparse-checkout: pack-template
@@ -49,5 +49,5 @@ jobs:
             echo "No pack-template changes on policy-axis main."
             exit 0
           fi
-          git commit -m "Sync pack-template from jbiskit/policy-axis"
+          git commit -m "Sync pack-template from jbiskit/Axis"
           git push
